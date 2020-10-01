@@ -1,21 +1,33 @@
 {
   "name": "mern-todo-app",
   "version": "0.1.0",
-  "private": true,
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
   "dependencies": {
+    "formik": "^2.1.7",
+    "history": "^5.0.0",
+    "prop-types": "^15.7.2",
+    "query-string": "^6.13.4",
     "axios": "^0.20.0",
     "bootstrap": "^4.5.2",
     "react": "^16.13.1",
     "react-confirm-alert": "^2.6.2",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.3"
+    "react-scripts": "3.4.3",
+    "rxjs": "^6.6.3",
+    "yup": "^0.29.3"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+  "devDependencies": {
+    "css-loader": "^4.3.0",
+    "less": "^3.12.2",
+    "less-loader": "^7.0.1",
+    "path": "^0.12.7",
+    "style-loader": "^1.2.1"
   },
   "eslintConfig": {
     "extends": "react-app"
