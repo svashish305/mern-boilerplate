@@ -1,5 +1,5 @@
 ﻿const express = require('express');
-var http = require('http').createServer(app);
+var http = require('http').createServer(express());
 var io = require('socket.io')(http);
 const router = express.Router();
 const Joi = require('joi');
@@ -13,7 +13,7 @@ router.get('/:id', authorize(), getById);
 router.post('/', authorize(), createSchema, create);
 router.put('/:id', authorize(), updateSchema, update);
 router.delete('/:id', authorize(), _delete);
-router.markComplete('/:id', authorize(), markCompleted);
+router.patch('/:id', authorize(), markCompleted);
 
 module.exports = router;
 
