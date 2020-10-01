@@ -1,0 +1,13 @@
+{
+    "connectionString": "mongodb://localhost/mern-crud-basic",
+    "secret": "HERE IS THE SECRET FOR MERN CRUD BASIC APP",
+    "emailFrom": "info@mern-crud-basic.com",
+    "smtpOptions": {
+        "host": "[ENTER YOUR OWN SMTP OPTIONS OR CREATE FREE TEST ACCOUNT IN ONE CLICK AT https://ethereal.email/]",
+        "port": 587,
+        "auth": {
+            "user": "",
+            "pass": ""
+        }
+    }
+}
