@@ -1,5 +1,5 @@
-import config from 'config';
-import { accountService } from '@/_services';
+import config from './config';
+import { userService } from './services/user.service';
 
 export const fetchWrapper = {
     get,
@@ -46,7 +46,7 @@ function _delete(url) {
 // helper functions
 
 function authHeader(url) {
-    const user = accountService.userValue;
+    const user = userService.userValue;
     const isLoggedIn = user && user.jwtToken;
     const isApiUrl = url.startsWith(config.apiUrl);
     if (isLoggedIn && isApiUrl) {
@@ -61,8 +61,8 @@ function handleResponse(response) {
         const data = text && JSON.parse(text);
         
         if (!response.ok) {
-            if ([401, 403].includes(response.status) && accountService.userValue) {
-                accountService.logout();
+            if ([401, 403].includes(response.status) && userService.userValue) {
+                userService.logout();
             }
 
             const error = (data && data.message) || response.statusText;
