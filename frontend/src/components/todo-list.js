@@ -26,8 +26,8 @@ function TodoList(props) {
       <div>
           {props.todos && props.todos.length &&  props.todos.map(todo => {
             return (
-              <div key={todo._id} className="todo-item">
-                <h2 onClick={todoClicked(todo)}>{todo.desc}</h2>
+              <div key={todo && todo._id} className="todo-item">
+                <h2 onClick={todoClicked(todo)}>{todo && todo.desc}</h2>
                 <FontAwesomeIcon icon={faEdit} onClick={() => editClicked(todo)} />
                 <FontAwesomeIcon icon={faTrash} onClick={() => removeClicked(todo)} />
               </div>

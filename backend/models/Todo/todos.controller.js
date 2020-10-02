@@ -10,10 +10,10 @@ const todoService = require('./todo.service');
 
 router.get('/', authorize(), getAll);
 router.get('/:id', authorize(), getById);
-router.post('/', authorize(), createSchema, create);
-router.patch('/:id', authorize(), updateSchema, update);
+router.post('/', authorize(), create);
+router.patch('/:id', authorize(), update);
 router.delete('/:id', authorize(), _delete);
-router.patch('/:id', authorize(), markCompleted);
+router.patch('/:id/mark-complete', authorize(), markCompleted);
 module.exports = router;
 
 function getAll(req, res, next) {
@@ -34,15 +34,6 @@ function getById(req, res, next) {
         .catch(next);
 }
 
-function createSchema(req, res, next) {
-    const schema = Joi.object({
-        desc: Joi.string(),
-        priority: Joi.string(),
-        completed: Joi.boolean()
-    });
-    validateRequest(req, next, schema);
-}
-
 function create(req, res, next) {
     todoService.create({...req.body, userId: req.user.id, updated: Date.now()})
         .then(todo => {
@@ -56,15 +47,6 @@ function create(req, res, next) {
             }
         })
         .catch(next);
-}
-
-function updateSchema(req, res, next) {
-    const schema = {
-        desc: Joi.string().empty(''),
-        priority: Joi.string().empty(''),
-        completed: Joi.boolean().empty(false)
-    };
-    validateRequest(req, next, schema);
 }
 
 function update(req, res, next) {
