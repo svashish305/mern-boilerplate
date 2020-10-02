@@ -4,40 +4,45 @@ import {useCookies} from 'react-cookie';
 
 function TodoForm(props) {
     
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
+    const [desc, setDesc] = useState('');
+    const [priority, setPriority] = useState('');
+    const [completed, setCompleted] = useState('');
     const [token] = useCookies(['mr-token']);
 
     useEffect(() => {
-        setTitle(props.todo.title)
-        setDescription(props.todo.description)    
+        setDesc(props.todo.desc)
+        setPriority(props.todo.priority)    
+        setCompleted(props.completed)
     }, [props.todo])
     
     const updateClicked = () => {
-        API.updateTodo(props.todo.id, {title, description}, token['mr-token'])
+        API.updateTodo(props.todo.id, {desc, priority, completed}, token['mr-token'])
         .then(resp => props.updatedTodo(resp))
         .catch(error => console.log(error))
     }
 
     const createClicked = () => {
-        API.createTodo({title, description}, token['mr-token'])
+        API.createTodo({desc, priority, completed}, token['mr-token'])
         .then(resp => props.todoCreated(resp))
         .catch(error => console.log(error))
     }
 
-    const isDisabled = title.length === 0 || description.length === 0;
+    const isDisabled = desc.length === 0 || priority.length === 0;
 
     return (
         <React.Fragment>
             { props.todo ? (
             <div>
-                <label htmlFor="title">Title</label><br />
-                <input id="title" type="text" placeholder="Title" value={title}
-                    onChange={evt => setTitle(evt.target.value)}
+                <label htmlFor="desc">Description</label><br />
+                <input id="desc" type="text" placeholder="Description" value={desc}
+                    onChange={evt => setDesc(evt.target.value)}
                 /><br />
-                <label htmlFor="description">Description</label><br />
-                <textarea id="description" type="text" placeholder="Description" value={description}
-                onChange={evt => setDescription(evt.target.value)}></textarea><br />
+                <label htmlFor="priority">Priority</label><br />
+                <textarea id="priority" type="text" placeholder="Priority" value={priority}
+                onChange={evt => setPriority(evt.target.value)}></textarea><br />
+                <label htmlFor="completed">Completed</label><br />
+                <textarea id="completed" type="text" placeholder="Completed" value={completed}
+                onChange={evt => setCompleted(evt.target.value)}></textarea><br />
                 { props.todo.id ?
                     <button onClick={updateClicked} disabled={isDisabled}>Update</button> :
                     <button onClick={createClicked} disabled={isDisabled}>Create</button>

@@ -8,8 +8,8 @@ function TodoList(props) {
     
   const [token] = useCookies(['mr-token']);
 
-  const movieClicked = todo => evt => {
-      props.movieClicked(todo)
+  const todoClicked = todo => evt => {
+      props.todoClicked(todo)
   }
 
   const editClicked = todo => {
@@ -27,7 +27,7 @@ function TodoList(props) {
           {props.todos && props.todos.map(todo => {
             return (
               <div key={todo.id} className="todo-item">
-                <h2 onClick={movieClicked(todo)}>{todo.title}</h2>
+                <h2 onClick={todoClicked(todo)}>{todo.desc}</h2>
                 <FontAwesomeIcon icon={faEdit} onClick={() => editClicked(todo)} />
                 <FontAwesomeIcon icon={faTrash} onClick={() => removeClicked(todo)} />
               </div>

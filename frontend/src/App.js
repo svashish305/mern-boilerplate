@@ -2,6 +2,8 @@ import React, {useState, useEffect} from 'react';
 import './App.css';
 import TodoList from './components/todo-list';
 import TodoForm from './components/todo-form';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 import {useCookies} from 'react-cookie';
 import {useFetch} from './hooks/useFetch';
 
