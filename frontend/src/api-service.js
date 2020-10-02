@@ -24,11 +24,11 @@ export class API {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Token ${token}`
+                'Authorization': `Bearer ${token}`
             }
             }).then(resp => {
                 console.log('todos ', resp)
-                resp.json()
+                // resp.json()
             }
                 )
     }
@@ -38,7 +38,7 @@ export class API {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Token ${token}`
+                'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify(body)
         }).then(resp => resp.json())
@@ -49,7 +49,7 @@ export class API {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Token ${token}`
+                'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify(body)
         }).then(resp => resp.json())
@@ -60,7 +60,7 @@ export class API {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Token ${token}`
+                'Authorization': `Bearer ${token}`
             }
         })
     }

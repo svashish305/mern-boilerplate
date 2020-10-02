@@ -16,7 +16,7 @@ function Auth() {
     
     const loginClicked = () => {
         API.loginUser({email, password})
-            .then(resp => setToken('mr-token', resp.token))
+            .then(resp => setToken('mr-token', resp.jwtToken))
             .catch(error => console.log(error))
     }
 
