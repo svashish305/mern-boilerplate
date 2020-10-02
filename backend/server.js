@@ -11,8 +11,8 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(cors());
 
-app.use('/users', require('./models/User/users.controller'));
-app.use('/todos', require('./models/Todo/todos.controller'));
+app.use('/api/users', require('./models/User/users.controller'));
+app.use('/api/todos', require('./models/Todo/todos.controller'));
 
 app.use(errorHandler);
 
