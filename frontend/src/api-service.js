@@ -47,10 +47,7 @@ export class API {
                 'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify(body)
-        }).then(resp => {
-            console.log(resp)
-            resp.json()
-        })
+        }).then(resp => resp.json())
     }
 
     static createTodo(body, token) {
