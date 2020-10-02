@@ -12,7 +12,7 @@ function TodoForm(props) {
     useEffect(() => {
         setDesc(props.todo.desc)
         setPriority(props.todo.priority)    
-        setCompleted(props.completed)
+        setCompleted(props.todo.completed)
     }, [props.todo])
     
     const updateClicked = () => {
