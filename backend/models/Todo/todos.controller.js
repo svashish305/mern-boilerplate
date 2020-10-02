@@ -8,7 +8,7 @@ const authorize = require('../../middleware/authorize')
 const Role = require('../../role');
 const todoService = require('./todo.service');
 
-router.get('/', authorize(Role.Admin), getAll);
+router.get('/', authorize(), getAll);
 router.get('/:id', authorize(), getById);
 router.post('/', authorize(), createSchema, create);
 router.put('/:id', authorize(), updateSchema, update);
