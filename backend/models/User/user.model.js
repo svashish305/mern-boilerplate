@@ -4,8 +4,6 @@ const Schema = mongoose.Schema;
 const schema = new Schema({
     email: { type: String, unique: true, required: true },
     passwordHash: { type: String, required: true },
-    name: { type: String, required: true },
-    acceptTerms: Boolean,
     role: { type: String, required: true },
     verificationToken: String,
     verified: Date,
