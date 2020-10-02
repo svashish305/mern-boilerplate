@@ -17,7 +17,7 @@ function TodoList(props) {
   }
 
   const removeClicked = todo => {
-    API.deleteTodo(todo.id, token['mr-token'])
+    API.deleteTodo(todo._id, token['mr-token'])
     .then(() => props.removeClicked(todo))
     .catch(error => console.log(error))
   }
@@ -26,7 +26,7 @@ function TodoList(props) {
       <div>
           {props.todos && props.todos.map(todo => {
             return (
-              <div key={todo.id} className="todo-item">
+              <div key={todo._id} className="todo-item">
                 <h2 onClick={todoClicked(todo)}>{todo.desc}</h2>
                 <FontAwesomeIcon icon={faEdit} onClick={() => editClicked(todo)} />
                 <FontAwesomeIcon icon={faTrash} onClick={() => removeClicked(todo)} />

@@ -26,11 +26,7 @@ export class API {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             }
-            }).then(resp => {
-                console.log('todos ', resp)
-                // resp.json()
-            }
-                )
+            }).then(resp => resp.json())
     }
     
     static updateTodo(todo_id, body, token) {
@@ -56,7 +52,7 @@ export class API {
     }
 
     static deleteTodo(todo_id, token) {
-        return fetch(`${process.env.REACT_APP_API_URL}/api/movies/${todo_id}/`, {
+        return fetch(`${process.env.REACT_APP_API_URL}/api/todos/${todo_id}/`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
