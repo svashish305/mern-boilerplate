@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import './App.css';
 import TodoList from './components/todo-list';
+import TodoDetails from './components/todo-details';
 import TodoForm from './components/todo-form';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
@@ -81,6 +82,7 @@ function App() {
             />
             <button onClick={newTodo}>New Todo</button>
           </div>
+          <TodoDetails todo={selectedTodo} updateTodo={loadTodo} />
           {editedTodo ? 
           <TodoForm todo={editedTodo} updatedTodo={updatedTodo} todoCreated={todoCreated} />
           : null}
