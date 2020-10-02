@@ -4,7 +4,7 @@ import {useCookies} from 'react-cookie';
 
 function Auth() {
     
-    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isLoginView, setIsLoginView] = useState(true);
 
@@ -15,18 +15,22 @@ function Auth() {
     }, [token])
     
     const loginClicked = () => {
-        API.loginUser({username, password})
-            .then(resp => setToken('mr-token', resp.token))
+        API.loginUser({email, password})
+            // .then(resp => setToken('mr-token', resp.token))
+            .then(resp => {
+                console.log('resp on clicking login', resp);
+                // setToken('mr-token', resp.jwtToken)
+            })
             .catch(error => console.log(error))
     }
 
     const registerClicked = () => {
-        API.registerUser({username, password})
+        API.registerUser({email, password})
             .then(() => loginClicked())
             .catch(error => console.log(error))
     }
 
-    const isDisabled = username.length === 0 || password.length === 0;
+    const isDisabled = email.length === 0 || password.length === 0;
 
     return (
         <div className="App">
@@ -34,9 +38,9 @@ function Auth() {
                 {isLoginView ? <h1>Login</h1> : <h1>Register</h1>}
             </header>
             <div className="login-container">
-                <label htmlFor="username">Username</label><br />
-                <input id="username" type="text" placeholder="Username" value={username}
-                    onChange={evt => setUsername(evt.target.value)}
+                <label htmlFor="email">Email</label><br />
+                <input id="email" type="email" placeholder="Email" value={email}
+                    onChange={evt => setEmail(evt.target.value)}
                 /><br />
                 <label htmlFor="password">Password</label><br />
                 <input id="password" type="password" placeholder="Password" value={password}
