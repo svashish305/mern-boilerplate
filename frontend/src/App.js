@@ -29,11 +29,11 @@ function App() {
   }
 
   const updatedTodo = todo => {
-    const newTodos = todos.map(mov => {
-      if ( mov.id === todo.id) {
+    const newTodos = todos.map(td => {
+      if ( td._id === todo._id) {
         return todo;
       }
-      return mov;
+      return td;
     })
     setTodos(newTodos)
   }
@@ -44,7 +44,7 @@ function App() {
   }
 
   const newTodo = () => {
-    setEditedTodo({title: '', description: ''});
+    setEditedTodo({desc: '', priority: '', completed: false});
     setSelectedTodo(null);
   }
 
@@ -54,7 +54,7 @@ function App() {
   }
 
   const removeClicked = todo => {
-    const newTodos = todos.filter(td => td.id !== todo.id)
+    const newTodos = todos.filter(td => td._id !== todo._id)
     setTodos(newTodos);
   }
 
