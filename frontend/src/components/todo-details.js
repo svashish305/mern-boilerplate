@@ -8,7 +8,7 @@ function TodoDetails(props) {
     let td = props.todo;
 
     const getDetails = () => {
-        fetch(`${process.env.REACT_APP_API_URL}/api/todos/${td.id}/`, {
+        fetch(`${process.env.REACT_APP_API_URL}/api/todos/${td._id}/`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

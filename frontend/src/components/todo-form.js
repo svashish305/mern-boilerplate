@@ -16,7 +16,7 @@ function TodoForm(props) {
     }, [props.todo])
     
     const updateClicked = () => {
-        API.updateTodo(props.todo.id, {desc, priority, completed}, token['mr-token'])
+        API.updateTodo(props.todo._id, {desc, priority, completed}, token['mr-token'])
         .then(resp => props.updatedTodo(resp))
         .catch(error => console.log(error))
     }
