@@ -31,8 +31,8 @@ function getById(req, res, next) {
 
 function createSchema(req, res, next) {
     const schema = Joi.object({
-        desc: Joi.string().required(),
-        priority: Joi.string().required(),
+        desc: Joi.string(),
+        priority: Joi.string(),
         completed: Joi.boolean()
     });
     validateRequest(req, next, schema);

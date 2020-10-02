@@ -20,6 +20,7 @@ module.exports = {
     create,
     update,
     delete: _delete,
+    getLoggedInUser,
     todosByUser
 };
 
@@ -304,6 +305,11 @@ async function sendPasswordResetEmail(user, origin) {
         html: `<h4>Reset Password Email</h4>
                ${message}`
     });
+}
+
+async function getLoggedInUser(id) {
+    const user = await db.User.findById(id);
+    return user;
 }
 
 async function todosByUser(id) {

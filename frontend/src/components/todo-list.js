@@ -24,7 +24,7 @@ function TodoList(props) {
 
   return (
       <div>
-          {props.todos && props.todos.map(todo => {
+          {props.todos && props.todos.length &&  props.todos.map(todo => {
             return (
               <div key={todo._id} className="todo-item">
                 <h2 onClick={todoClicked(todo)}>{todo.desc}</h2>

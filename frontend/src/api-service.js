@@ -19,6 +19,26 @@ export class API {
         }).then(resp => resp.json())
     }
 
+    static currentLoggedInUser(token) {
+        return fetch(`${process.env.REACT_APP_API_URL}/api/users/loggedin`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+            }).then(resp => resp.json())
+    }
+
+    static todosOfUser(user_id, token) {
+        return fetch(`${process.env.REACT_APP_API_URL}/api/users/${user_id}/todos`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+            }).then(resp => resp.json())
+    }
+
     static getTodos(token) {
         return fetch(`${process.env.REACT_APP_API_URL}/api/todos/`, {
             method: 'GET',
@@ -48,7 +68,10 @@ export class API {
                 'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify(body)
-        }).then(resp => resp.json())
+        }).then(resp => {
+            console.log('todo created ', resp)
+            resp.json()
+        })
     }
 
     static deleteTodo(todo_id, token) {

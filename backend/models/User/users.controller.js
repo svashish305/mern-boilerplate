@@ -16,6 +16,7 @@ router.post('/forgot-password', forgotPasswordSchema, forgotPassword);
 router.post('/validate-reset-token', validateResetTokenSchema, validateResetToken);
 router.post('/reset-password', resetPasswordSchema, resetPassword);
 router.get('/', authorize(Role.Admin), getAll);
+router.get('/loggedin', authorize(), getLoggedInUser);
 router.get('/:id', authorize(), getById);
 router.post('/', authorize(Role.Admin), createSchema, create);
 router.put('/:id', authorize(), updateSchema, update);
@@ -62,13 +63,11 @@ function revokeTokenSchema(req, res, next) {
 }
 
 function revokeToken(req, res, next) {
-    // accept token from request body or cookie
     const token = req.body.token || req.cookies.refreshToken;
     const ipAddress = req.ip;
 
     if (!token) return res.status(400).json({ message: 'Token is required' });
 
-    // users can revoke their own tokens and admins can revoke any tokens
     if (!req.user.ownsToken(token) && req.user.role !== Role.Admin) {
         return res.status(401).json({ message: 'Unauthorized' });
     }
@@ -152,13 +151,25 @@ function resetPassword(req, res, next) {
 }
 
 function getAll(req, res, next) {
-    userService.getAll()
+    if(req.user.role == Role.Admin) {
+        userService.getAll()
         .then(users => res.json(users))
         .catch(next);
+    } else {
+        userService.todosByUser(req.user.id)
+        .then((todos) => res.json(todos))
+        .catch(next);
+    }
+    
+}
+
+function getLoggedInUser(req, res, next) {
+    userService.getLoggedInUser(req.user.id)
+        .then(user => res.json(user))
+        .catch(next)
 }
 
 function getById(req, res, next) {
-    // users can get their own user and admins can get any user
     if (req.params.id !== req.user.id && req.user.role !== Role.Admin) {
         return res.status(401).json({ message: 'Unauthorized' });
     }
@@ -193,7 +204,6 @@ function updateSchema(req, res, next) {
         confirmPassword: Joi.string().valid(Joi.ref('password')).empty('')
     };
 
-    // only admins can update role
     if (req.user.role === Role.Admin) {
         schemaRules.role = Joi.string().valid(Role.Admin, Role.User).empty('');
     }
@@ -203,7 +213,6 @@ function updateSchema(req, res, next) {
 }
 
 function update(req, res, next) {
-    // users can update their own user and admins can update any user
     if (req.params.id !== req.user.id && req.user.role !== Role.Admin) {
         return res.status(401).json({ message: 'Unauthorized' });
     }
@@ -214,7 +223,6 @@ function update(req, res, next) {
 }
 
 function _delete(req, res, next) {
-    // users can delete their own user and admins can delete any user
     if (req.params.id !== req.user.id && req.user.role !== Role.Admin) {
         return res.status(401).json({ message: 'Unauthorized' });
     }
@@ -233,7 +241,6 @@ function todosOfUser(req, res, next) {
 // helper functions
 
 function setTokenCookie(res, token) {
-    // create cookie with refresh token that expires in 7 days
     const cookieOptions = {
         httpOnly: true,
         expires: new Date(Date.now() + 7*24*60*60*1000)
