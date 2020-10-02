@@ -29,16 +29,6 @@ export class API {
             }).then(resp => resp.json())
     }
 
-    static todosOfUser(user_id, token) {
-        return fetch(`${process.env.REACT_APP_API_URL}/api/users/${user_id}/todos`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            }
-            }).then(resp => resp.json())
-    }
-
     static getTodos(token) {
         return fetch(`${process.env.REACT_APP_API_URL}/api/todos/`, {
             method: 'GET',
