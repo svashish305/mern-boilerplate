@@ -14,13 +14,18 @@ router.post('/', authorize(), createSchema, create);
 router.put('/:id', authorize(), updateSchema, update);
 router.delete('/:id', authorize(), _delete);
 router.patch('/:id', authorize(), markCompleted);
-
 module.exports = router;
 
 function getAll(req, res, next) {
-    todoService.getAll()
-        .then(todos => res.json(todos))
-        .catch(next);
+    if(req.user.role === Role.Admin) {
+        todoService.getAll()
+            .then(todos => res.json(todos))
+            .catch(next);
+    } else if(req.user.role === Role.User) {
+        todoService.todosOfUser(req.user.id)
+            .then(todos => res.json(todos))
+            .catch(next);
+    }
 }
 
 function getById(req, res, next) {

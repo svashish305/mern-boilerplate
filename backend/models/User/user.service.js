@@ -20,8 +20,7 @@ module.exports = {
     create,
     update,
     delete: _delete,
-    getLoggedInUser,
-    todosByUser
+    getLoggedInUser
 };
 
 async function authenticate({ email, password, ipAddress }) {
@@ -310,9 +309,4 @@ async function sendPasswordResetEmail(user, origin) {
 async function getLoggedInUser(id) {
     const user = await db.User.findById(id);
     return user;
-}
-
-async function todosByUser(id) {
-    const user = await db.User.findById(id).populate('todos');
-    return user.todos;
 }

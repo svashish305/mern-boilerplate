@@ -6,7 +6,8 @@ module.exports = {
     create,
     update,
     delete: _delete,
-    markCompleted
+    markCompleted,
+    todosOfUser
 };
 
 async function getAll() {
@@ -47,4 +48,9 @@ async function markCompleted(id) {
     await todo.save();
 
     return todo;
+}
+
+async function todosOfUser(user_id) {
+    const todos = await db.Todo.find({userId: user_id});
+    return todos;
 }

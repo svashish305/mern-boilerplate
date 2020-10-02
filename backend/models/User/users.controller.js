@@ -21,7 +21,6 @@ router.get('/:id', authorize(), getById);
 router.post('/', authorize(Role.Admin), createSchema, create);
 router.put('/:id', authorize(), updateSchema, update);
 router.delete('/:id', authorize(), _delete);
-router.get('/:id/todos', authorize(), todosOfUser)
 
 module.exports = router;
 
@@ -146,16 +145,9 @@ function resetPassword(req, res, next) {
 }
 
 function getAll(req, res, next) {
-    if(req.user.role == Role.Admin) {
-        userService.getAll()
+    userService.getAll()
         .then(users => res.json(users))
         .catch(next);
-    } else {
-        userService.todosByUser(req.user.id)
-        .then((todos) => res.json(todos))
-        .catch(next);
-    }
-    
 }
 
 function getLoggedInUser(req, res, next) {
@@ -224,12 +216,6 @@ function _delete(req, res, next) {
 
     userService.delete(req.params.id)
         .then(() => res.json({ message: 'User deleted successfully' }))
-        .catch(next);
-}
-
-function todosOfUser(req, res, next) {
-    userService.todosByUser(req.params.id)
-        .then((todos) => res.json(todos))
         .catch(next);
 }
 
