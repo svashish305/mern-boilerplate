@@ -43,7 +43,7 @@ function TodoForm(props) {
                 <label htmlFor="completed">Completed</label><br />
                 <textarea id="completed" type="text" placeholder="Completed" value={completed}
                 onChange={evt => setCompleted(evt.target.value)}></textarea><br />
-                { props.todo.id ?
+                { props.todo._id ?
                     <button onClick={updateClicked} disabled={isDisabled}>Update</button> :
                     <button onClick={createClicked} disabled={isDisabled}>Create</button>
                 }

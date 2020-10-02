@@ -41,7 +41,7 @@ export class API {
     
     static updateTodo(todo_id, body, token) {
         return fetch(`${process.env.REACT_APP_API_URL}/api/todos/${todo_id}/`, {
-            method: 'PUT',
+            method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`

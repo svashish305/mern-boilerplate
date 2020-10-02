@@ -11,7 +11,7 @@ const todoService = require('./todo.service');
 router.get('/', authorize(), getAll);
 router.get('/:id', authorize(), getById);
 router.post('/', authorize(), createSchema, create);
-router.put('/:id', authorize(), updateSchema, update);
+router.patch('/:id', authorize(), updateSchema, update);
 router.delete('/:id', authorize(), _delete);
 router.patch('/:id', authorize(), markCompleted);
 module.exports = router;
@@ -62,7 +62,7 @@ function updateSchema(req, res, next) {
     const schema = {
         desc: Joi.string().empty(''),
         priority: Joi.string().empty(''),
-        completed: Joi.boolean(false)
+        completed: Joi.boolean().empty(false)
     };
     validateRequest(req, next, schema);
 }

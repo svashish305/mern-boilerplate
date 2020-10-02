@@ -49,7 +49,7 @@ function App() {
   }
 
   const todoCreated = todo => {
-    const newTodos = [...todos, todo];    
+    const newTodos = [...todos, todo];  
     setTodos(newTodos);
   }
 

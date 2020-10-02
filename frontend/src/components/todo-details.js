@@ -26,7 +26,7 @@ function TodoDetails(props) {
                 <div>
                     <h1>{td.desc}</h1>
                     <p>{td.priority}</p>
-                    <p>{td.completed}</p>
+                    <p>{td.completed ? 'Completed' : 'Pending'}</p>
                 </div>
             ) : null}
         </React.Fragment>
