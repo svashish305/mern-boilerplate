@@ -26,7 +26,11 @@ export class API {
                 'Content-Type': 'application/json',
                 'Authorization': `Token ${token}`
             }
-            }).then(resp => resp.json())
+            }).then(resp => {
+                console.log('todos ', resp)
+                resp.json()
+            }
+                )
     }
     
     static updateTodo(todo_id, body, token) {

@@ -16,11 +16,7 @@ function Auth() {
     
     const loginClicked = () => {
         API.loginUser({email, password})
-            // .then(resp => setToken('mr-token', resp.token))
-            .then(resp => {
-                console.log('resp on clicking login', resp);
-                // setToken('mr-token', resp.jwtToken)
-            })
+            .then(resp => setToken('mr-token', resp.token))
             .catch(error => console.log(error))
     }
 
