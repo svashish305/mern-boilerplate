@@ -2,7 +2,6 @@ require('rootpath')();
 const express = require('express');
 const app = express();
 const server = require('http').createServer(app);
-const io = require('socket.io')(server);
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
@@ -27,4 +26,5 @@ const port = process.env.NODE_ENV === 'production' ? (process.env.PORT || 80) : 
 app.listen(port, () => {
     console.log('Server listening on port ' + port);
 });
+
 module.exports = {app: app, server: server};

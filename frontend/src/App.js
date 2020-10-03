@@ -98,6 +98,7 @@ function App() {
           {editedTodo ? 
           <TodoForm todo={editedTodo} updatedTodo={updatedTodo} todoCreated={todoCreated} />
           : null}
+          <br></br>
           {loggedInUser.role===role.Admin ? <p>Socket Response : {socketResponse}</p> : null}
         </div>
     </div>
