@@ -6,7 +6,6 @@ module.exports = {
     create,
     update,
     delete: _delete,
-    markCompleted,
     todosOfUser
 };
 
@@ -39,15 +38,6 @@ async function update(id, params) {
 async function _delete(id) {
     const todo = await getById(id);
     await todo.remove();
-}
-
-async function markCompleted(id) {
-    const todo = await getById(id);
-
-    todo.completed = true;
-    await todo.save();
-
-    return todo;
 }
 
 async function todosOfUser(user_id) {

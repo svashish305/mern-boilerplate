@@ -28,7 +28,18 @@ function App() {
 
   useEffect(() => {
     const socket = socketIOClient(process.env.REACT_APP_API_URL);
-    socket.on("FromAPI", d => {
+    socket.on("createdTodo", d => {
+      console.log(d)
+      setSocketResponse(d);
+    });
+    setSocketResponse('');
+    socket.on("updatedTodo", d => {
+      console.log(d)
+      setSocketResponse(d);
+    });
+    setSocketResponse('');
+    socket.on("completedTodo", d => {
+      console.log(d)
       setSocketResponse(d);
     });
   }, []);

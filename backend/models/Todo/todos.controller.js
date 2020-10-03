@@ -2,15 +2,13 @@
 const router = express.Router();
 const authorize = require('../../middleware/authorize')
 const Role = require('../../role');
+const server = require('../../server').server;
 const todoService = require('./todo.service');
-var server = require('../../server').server;
-const io = require('socket.io')(server); 
 router.get('/', authorize(), getAll);
 router.get('/:id', authorize(), getById);
 router.post('/', authorize(), create);
 router.patch('/:id', authorize(), update);
 router.delete('/:id', authorize(), _delete);
-router.patch('/:id/mark-complete', authorize(), markCompleted);
 module.exports = router;
 
 function getAll(req, res, next) {
@@ -34,7 +32,7 @@ function getById(req, res, next) {
 function create(req, res, next) {
     todoService.create({...req.body, userId: req.user.id, updated: Date.now()})
         .then(todo => {
-            
+            res.io.emit("createdTodo", "Todo Created!");
             res.json(todo)
         })
         .catch(next);
@@ -43,7 +41,10 @@ function create(req, res, next) {
 function update(req, res, next) {
     todoService.update(req.params.id, req.body)
         .then(todo => {
-            
+            res.io.emit("updatedTodo", "Todo Updated!");
+            if(todo.completed) {
+                res.io.emit("completedTodo", "Todo Completed");
+            }
             res.json(todo)
         })
         .catch(next);
@@ -52,14 +53,5 @@ function update(req, res, next) {
 function _delete(req, res, next) {
     todoService.delete(req.params.id)
         .then(() => res.json({ message: 'Todo deleted successfully' }))
-        .catch(next);
-}
-
-function markCompleted(req, res, next) {
-    todoService.markCompleted(req.params.id)
-        .then(todo => {
-            
-            res.json(todo)
-        })
         .catch(next);
 }
