@@ -16,6 +16,12 @@ NodeJS, ReactJS, MongoDB, Express
 
 Backend - 1st user registered gets admin role and subsequent users have non-admin roles
 
+## Run
+run local mongodb server, then, in project root, run script is -> 
+```
+npm run start:dev
+```
+
 ## Built With
 
 MERN Stack
