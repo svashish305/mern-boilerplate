@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import './App.css';
+import socketIOClient from "socket.io-client";
 import TodoList from './components/todo-list';
 import TodoDetails from './components/todo-details';
 import TodoForm from './components/todo-form';
@@ -7,13 +8,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 import {useCookies} from 'react-cookie';
 import {useFetch} from './hooks/useFetch';
+import role from './role';
 
 function App() {
   const [todos, setTodos] = useState([]);
   const [selectedTodo, setSelectedTodo] = useState(null);
   const [editedTodo, setEditedTodo] = useState(null);
   const [token, setToken, deleteToken] = useCookies(['mr-token']);
-  const [data, loading, error] = useFetch();
+  const [data, loggedInUser, loading, error] = useFetch();
+  const [socketResponse, setSocketResponse] = useState("");
 
   useEffect(() => {
     setTodos(data)
@@ -22,6 +25,13 @@ function App() {
   useEffect(() => {
     if (!token['mr-token']) window.location.href = '/';
   }, [token])
+
+  useEffect(() => {
+    const socket = socketIOClient(process.env.REACT_APP_API_URL);
+    socket.on("FromAPI", d => {
+      setSocketResponse(d);
+    });
+  }, []);
 
   const loadTodo = todo => {
     setSelectedTodo(todo);
@@ -74,6 +84,8 @@ function App() {
         <FontAwesomeIcon icon={faSignOutAlt} onClick={logoutUser} />
       </header>
       <div className="layout">
+          <h1>Hi {loggedInUser.email}!</h1>
+          <br></br>
           <div>
             <TodoList todos={todos} 
               todoClicked={loadTodo} 
@@ -86,6 +98,7 @@ function App() {
           {editedTodo ? 
           <TodoForm todo={editedTodo} updatedTodo={updatedTodo} todoCreated={todoCreated} />
           : null}
+          {loggedInUser.role===role.Admin ? <p>Socket Response : {socketResponse}</p> : null}
         </div>
     </div>
   );

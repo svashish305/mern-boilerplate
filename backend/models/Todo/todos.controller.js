@@ -1,9 +1,7 @@
 ﻿const express = require('express');
-var http = require('http').createServer(express());
-var io = require('socket.io')(http);
 const router = express.Router();
+const server = require('../../server').server;
 const Joi = require('joi');
-const validateRequest = require('../../middleware/validate-request');
 const authorize = require('../../middleware/authorize')
 const Role = require('../../role');
 const todoService = require('./todo.service');
@@ -39,11 +37,7 @@ function create(req, res, next) {
         .then(todo => {
             res.json(todo);
             if(req.user.role == Role.Admin) {
-                io.on('connection', (socket) => {
-                    socket.on('todo created', (msg) => {
-                      io.emit('todo created', msg);
-                    });
-                  });
+                res.io.emit("todo created")
             }
         })
         .catch(next);
@@ -54,11 +48,7 @@ function update(req, res, next) {
         .then(todo => {
             res.json(todo);
             if(req.user.role == Role.Admin) {
-                io.on('connection', (socket) => {
-                    socket.on('todo updated', (msg) => {
-                      io.emit('todo updated', msg);
-                    });
-                  });
+                res.io.emit("todo created")
             }
         })
         .catch(next);
@@ -75,11 +65,7 @@ function markCompleted(req, res, next) {
         .then(todo => {
             res.json(todo);
             if(req.user.role == Role.Admin) {
-                io.on('connection', (socket) => {
-                    socket.on('todo completed', (msg) => {
-                      io.emit('todo completed', msg);
-                    });
-                  });
+                res.io.emit("todo created")
             }
         })
         .catch(next);
