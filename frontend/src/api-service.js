@@ -58,10 +58,8 @@ export class API {
                 'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify(body)
-        }).then(resp => {
-            console.log('todo created ', resp)
-            resp.json()
-        })
+        }).then(resp => resp.json())
+        .catch(err => console.log(err));
     }
 
     static deleteTodo(todo_id, token) {

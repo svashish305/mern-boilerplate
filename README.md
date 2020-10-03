@@ -14,22 +14,7 @@ What things you need to install
 NodeJS, ReactJS, MongoDB, Express
 ```
 
-### Installing
-
-A step by step series of examples that tell you how to get a development env running
-
-The step will be
-
-```
-cd backend
-nodemon server
-```
-
-Simaultaneously in other terminal tab (in project root folder)
-
-```
-npm start
-```
+Backend - 1st user registered gets admin role and subsequent users have non-admin roles
 
 ## Built With
 
