@@ -17,7 +17,8 @@ NodeJS, ReactJS, MongoDB, Express
 Backend - 1st user registered gets admin role and subsequent users have non-admin roles
 
 ## Run
-run local mongodb server, then, in project root, run script is -> 
+1. In project root, as well as backend/ and frontend/ folders, run "npm i" to install package dependencies
+2. run local mongodb server, then, in project root, run script is -> 
 ```
 npm run start:dev
 ```
