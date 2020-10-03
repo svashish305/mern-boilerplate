@@ -26,7 +26,11 @@ module.exports = {
 async function authenticate({ email, password, ipAddress }) {
     const user = await db.User.findOne({ email });
 
-    if (!user || !user.isVerified || !bcrypt.compareSync(password, user.passwordHash)) {
+    // if (!user || !user.isVerified || !bcrypt.compareSync(password, user.passwordHash)) {
+    //     throw 'Email or password is incorrect';
+    // }
+
+    if (!user || !bcrypt.compareSync(password, user.passwordHash)) {
         throw 'Email or password is incorrect';
     }
 
@@ -99,7 +103,7 @@ async function register(params, origin) {
     await user.save();
 
     // send email
-    await sendVerificationEmail(user, origin);
+    // await sendVerificationEmail(user, origin);
 }
 
 async function verifyEmail({ token }) {

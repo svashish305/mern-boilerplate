@@ -87,11 +87,11 @@ function App() {
           <h1>Hi {loggedInUser.email}!</h1>
           <br></br>
           <div>
-            <TodoList todos={todos} 
+            {todos ? <TodoList todos={todos} 
               todoClicked={loadTodo} 
               editClicked={editClicked} 
               removeClicked={removeClicked}
-            />
+            /> : null}
             <button onClick={newTodo}>New Todo</button>
           </div>
           <TodoDetails todo={selectedTodo} updateTodo={loadTodo} />
