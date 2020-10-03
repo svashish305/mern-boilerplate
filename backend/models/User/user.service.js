@@ -34,14 +34,11 @@ async function authenticate({ email, password, ipAddress }) {
         throw 'Email or password is incorrect';
     }
 
-    // authentication successful so generate jwt and refresh tokens
     const jwtToken = generateJwtToken(user);
     const refreshToken = generateRefreshToken(user, ipAddress);
 
-    // save refresh token
     await refreshToken.save();
 
-    // return basic details and tokens
     return {
         ...basicDetails(user),
         jwtToken,
@@ -53,7 +50,6 @@ async function refreshToken({ token, ipAddress }) {
     const refreshToken = await getRefreshToken(token);
     const { user } = refreshToken;
 
-    // replace old refresh token with a new one and save
     const newRefreshToken = generateRefreshToken(user, ipAddress);
     refreshToken.revoked = Date.now();
     refreshToken.revokedByIp = ipAddress;
@@ -61,10 +57,8 @@ async function refreshToken({ token, ipAddress }) {
     await refreshToken.save();
     await newRefreshToken.save();
 
-    // generate new jwt
     const jwtToken = generateJwtToken(user);
 
-    // return basic details and tokens
     return {
         ...basicDetails(user),
         jwtToken,
@@ -75,34 +69,26 @@ async function refreshToken({ token, ipAddress }) {
 async function revokeToken({ token, ipAddress }) {
     const refreshToken = await getRefreshToken(token);
 
-    // revoke token and save
     refreshToken.revoked = Date.now();
     refreshToken.revokedByIp = ipAddress;
     await refreshToken.save();
 }
 
 async function register(params, origin) {
-    // validate
     if (await db.User.findOne({ email: params.email })) {
-        // send already registered error in email to prevent user enumeration
         return await sendAlreadyRegisteredEmail(params.email, origin);
     }
 
-    // create user object
     const user = new db.User(params);
 
-    // first registered user is an admin
     const isFirstUser = (await db.User.countDocuments({})) === 0;
     user.role = isFirstUser ? Role.Admin : Role.User;
     user.verificationToken = randomTokenString();
 
-    // hash password
     user.passwordHash = hash(params.password);
 
-    // save user
     await user.save();
 
-    // send email
     // await sendVerificationEmail(user, origin);
 }
 
@@ -119,17 +105,14 @@ async function verifyEmail({ token }) {
 async function forgotPassword({ email }, origin) {
     const user = await db.User.findOne({ email });
 
-    // always return ok response to prevent email enumeration
     if (!user) return;
 
-    // create reset token that expires after 24 hours
     user.resetToken = {
         token: randomTokenString(),
         expires: new Date(Date.now() + 24*60*60*1000)
     };
     await user.save();
 
-    // send email
     await sendPasswordResetEmail(user, origin);
 }
 
@@ -150,7 +133,6 @@ async function resetPassword({ token, password }) {
 
     if (!user) throw 'Invalid token';
 
-    // update password and remove reset token
     user.passwordHash = hash(password);
     user.passwordReset = Date.now();
     user.resetToken = undefined;
@@ -168,7 +150,6 @@ async function getById(id) {
 }
 
 async function create(params) {
-    // validate
     if (await db.User.findOne({ email: params.email })) {
         throw 'Email "' + params.email + '" is already registered';
     }
@@ -176,10 +157,8 @@ async function create(params) {
     const user = new db.User(params);
     user.verified = Date.now();
 
-    // hash password
     user.passwordHash = hash(params.password);
 
-    // save user
     await user.save();
 
     return basicDetails(user);
@@ -188,17 +167,14 @@ async function create(params) {
 async function update(id, params) {
     const user = await getUser(id);
 
-    // validate (if email was changed)
     if (params.email && user.email !== params.email && await db.User.findOne({ email: params.email })) {
         throw 'Email "' + params.email + '" is already taken';
     }
 
-    // hash password if it was entered
     if (params.password) {
         params.passwordHash = hash(params.password);
     }
 
-    // copy params to user and save
     Object.assign(user, params);
     user.updated = Date.now();
     await user.save();
@@ -231,16 +207,14 @@ function hash(password) {
 }
 
 function generateJwtToken(user) {
-    // create a jwt token containing the user id that expires in 15 minutes
-    return jwt.sign({ sub: user.id, id: user.id }, config.secret, { expiresIn: '15m' });
+    return jwt.sign({ sub: user.id, id: user.id }, config.secret, { expiresIn: '60m' });
 }
 
 function generateRefreshToken(user, ipAddress) {
-    // create a refresh token that expires in 7 days
     return new db.RefreshToken({
         user: user.id,
         token: randomTokenString(),
-        expires: new Date(Date.now() + 7*24*60*60*1000),
+        expires: new Date(Date.now() + 7*24*60*60*1000), // 7 days
         createdByIp: ipAddress
     });
 }
