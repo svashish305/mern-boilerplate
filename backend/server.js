@@ -8,8 +8,6 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const errorHandler = require('./middleware/error-handler');
 
-const socket={};
-
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
@@ -26,7 +24,6 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 io.on("connection", (socket) => {
-    socket = socket;
     console.log("New client connected");
     socket.emit("FromAPI", "hello from socket!");
     socket.on("disconnect", () => {
