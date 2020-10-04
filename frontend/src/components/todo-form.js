@@ -27,7 +27,7 @@ function TodoForm(props) {
         .catch(error => console.log(error))
     }
 
-    const isDisabled = desc.length === 0 || priority.length === 0;
+    const isDisabled = (desc && desc.length === 0) || (priority && priority.length === 0);
 
     return (
         <React.Fragment>
