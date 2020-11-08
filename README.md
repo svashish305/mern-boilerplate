@@ -14,7 +14,8 @@ What things you need to install
 NodeJS, ReactJS, MongoDB, Express
 ```
 
-Backend - 1st user registered gets admin role and subsequent users have non-admin roles
+Backend - 1st user registered gets admin role and subsequent users have non-admin roles, app features jwt authentication and role-based authorization, compatible
+to add mulitple roles and restrict API endpoints according to requirement.
 
 ## Run
 1. In project root, as well as backend/ and frontend/ folders, run "npm i" to install package dependencies
