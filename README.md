@@ -1,6 +1,19 @@
 # Basic ToDo CRUD app using MERN stack
 
+# Question was:
+create a Todo App using MERN Stack.
 
+• Create a REST/GRAPHQL API using Express, MongoDB (Back End).
+• Create a React APP interact with backend API you have created.
+• Include Registration, Authentication & Authorization (Admin/User Roles).
+• Admin can view all the user's todos.
+• Users can view only their todos.
+• Todos should have a priority like low, high etc.
+• Use React Hooks, Redux and Socket IO.
+• Socket IO is to simply broadcast todo status to admin users whenever it is created, edited or completed.
+• Create needed components wherever required.
+• Use any CSS framework for UI.
+• Use the latest version for all packages and modules.
 
 ## Getting Started
 
